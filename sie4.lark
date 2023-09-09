@@ -1,0 +1,66 @@
+start: label*
+
+?label: flagga
+      | fnamn
+      | format
+      | gen
+      | ib
+      | konto
+      | kptyp
+      | orgnr
+      | program
+      | rar
+      | res
+      | sietyp
+      | sru
+      | ub
+      | ver
+
+
+flagga: "#FLAGGA" POSITIVE_INT
+
+fnamn: "#FNAMN" ESCAPED_STRING
+
+format: "#FORMAT" "PC8"
+
+gen: "#GEN" DATE
+
+ib: "#IB" INT POSITIVE_INT AMOUNT
+
+konto: "#KONTO" INT ESCAPED_STRING
+
+kptyp: "#KPTYP" KPTYP
+
+orgnr: "#ORGNR" ORGNR
+
+program: "#PROGRAM" ESCAPED_STRING DECIMAL
+
+rar: "#RAR" INT DATE DATE
+
+res: "#RES" INT POSITIVE_INT AMOUNT
+
+sietyp: "#SIETYP" POSITIVE_INT
+
+sru: "#SRU" POSITIVE_INT POSITIVE_INT
+
+ub: "#UB" INT POSITIVE_INT AMOUNT
+
+ver: "#VER" ESCAPED_STRING ESCAPED_STRING DATE ESCAPED_STRING DATE "{" trans+ "}"
+
+trans: "#TRANS" POSITIVE_INT "{" "}" AMOUNT
+
+
+
+DATE: /\d{8}/
+ORGNR: /\d{6}-?\d{4}/
+
+KPTYP: /BAS\d{4}/
+
+INT: /-?\d+/
+POSITIVE_INT: /\d+/
+AMOUNT: /-?\d+\.\d{2}/
+
+%import common.DECIMAL
+%import common.ESCAPED_STRING
+%import common.WS
+%ignore WS
